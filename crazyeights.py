@@ -6,16 +6,26 @@ class Game:
     """ A crazy eights game that can be played between humans and/or computers. 
     
     Attributes:
-            suits (str): Suits in a normal card deck.
-            faces (str): Each number/rank in a normal card deck.
-            value (int): The values that each rank takes in the Crazy Eight's game.
-            deck (list): A list of all possible suit, face combinations from a normal card deck.
-            name(str): The name of the player
-            player_hand: (list): empty list (of where player's 7 cards will be stored).
-            computer_hand (list): empty list (of where computer's 7 cards will be stored).
-            discard_pile (int): default to 0
-            suit_change (str): empty str (of where the new suit in the Crazy Eight's game will be specified.) """
-    
+        suits (str): Suits in a normal card deck of
+            Hearts, Diamonds, Spades, and Clubs.
+        faces (str): Each number/rank in a normal card deck with the
+            numbers 1-10 and "J" for Joker, "K" for King,"Q" for Queen,
+            and "A" for Ace.
+        value (int): The values that each rank takes in the Crazy Eight's game with 8s holding
+            a value of 50, Aces, Kings, Queens, and Jokers holding values of 10, and numbers 2-7
+            holding their real values.
+        deck (list): A list of all possible suit, face combinations from a normal card deck.
+            For example one possible combination would be[(Heart, Q)].
+        name(str): The name of the player.
+        player_hand: (list): empty list (of where player's 7 cards will be stored).
+        computer_hand (list): empty list (of where computer's 7 cards will be stored).
+        discard_pile (int): Cards that the players will discard into a pile throughout the
+            game with the winner being the first player to discard all of their cards. 
+            Default to 0.
+        suit_change (str): empty str of where the new suit in the Crazy Eight's game will be specified.
+            The suit is chnaged in cases where a player might play a number, for example an 8,
+            which allows the player to change the suit for the next turn.
+    """
     
     def __init__(self, name):
         """ Initializes all attributes pertinent to the game.
@@ -24,7 +34,7 @@ class Game:
             Name(str)- name of the player
             
         Side Effects:
-            Initializes attrributes.     
+            Initializes attrributes.
         """
         
     
