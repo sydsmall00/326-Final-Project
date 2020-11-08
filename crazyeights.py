@@ -24,7 +24,7 @@ class Game:
             Name(str)- name of the player
             
         Side Effects:
-            Initializes attrributes     
+            Initializes attrributes.     
         """
         
     
