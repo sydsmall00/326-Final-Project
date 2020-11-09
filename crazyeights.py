@@ -37,8 +37,7 @@ class Game:
         Args:
             Name(str):name of the player to be used throughout the game.   
         """
-
-
+        
     def card_dealer(self):
         """ Assigns cards from deck to player and computer hands. Each receive 7 cards.
             Creates the discard pile.
@@ -69,8 +68,6 @@ class Game:
             
         Raises: error if the action is invalid, allows player to redo turn.
         """
-        
-        
    
     def player_turn(self):
         """ Allows the player to perform their turn: choose a new card from the discard pile, or enter the number of the card they want to discard.
@@ -81,7 +78,6 @@ class Game:
             (str): "The deck has no more cards!"
             computer_turn: if the player has completed their turn.
         """
-        
             
     def computer_options(self):
         """ Determines the card selected is allowed to be chosen according to Crazy Eight's rules.
@@ -97,13 +93,14 @@ class Game:
         """
         
     def computer_turn(self):
-        """ Allows the computer to perform its turn. 
+        """ Allows the player to perform their turn: choose a new card from the discard pile, or enter the number of the card they want to discard.
+            Will either append card to player_hand or place a card on top of the discard pile.
         
         Returns:
             (str): "You have no more cards!" 
             (str): "The deck has no more cards!"
+            player_turn: if the computer has finished its turn
         """
-        
             
     def calculator(self):
         """ Calculates the points as according to the Crazy Eight's rules.
@@ -115,7 +112,6 @@ class Game:
             player_points(int): # of points the player has @ end of game.
             computer_points(int): # of points the computer scored @ end of game.
         """
-          
                 
     def start(self):
         """ Starts functions required to play Crazy Eight's program.
