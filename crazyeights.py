@@ -1,6 +1,7 @@
 # Programmers: Dagmawit Asfaw, Aaron Rapaka, Fernando Sierra, Sydney Small
 
 from random import shuffle
+from random import choice
 
 class Game:
             
@@ -152,27 +153,85 @@ class Game:
             self.computer_turn()
             
     def computer_options(self):
-        """ Determines the card selected is allowed to be chosen according to Crazy Eight's rules.
-            Only a card of the same face or suit can be discarded.
-           
-        Args:
-            selected_card(tuple): the card (suit, face) the player chooses to add to the discard pile. 
+        """ Selects card for the computer to play according to Crazy Eight's rules.
+            Only a card of the same face or suit can be discarded. If an 8 is played,
+            a new suit can be chosen by the computer for future rounds.
             
-        Returns:
-            (boolean): True if player performs a valid action, False if player performs an invalid action.
+            Parameters:
+                last(tuple): Top card of the discard pile
+                play_options(list): Options for the computer to choose from
+                discarded_card(tuple): Card that is discarded by the computer
             
-        Raises: error if the action is invalid, allows player to redo turn. 
-        """
+            Side Effects:
+                May change the top card of the discard pile.
+            """
+        #Top card in the discard pile
+        last= self.discarded[-1]
+        #A list of cards that the computer can legally discard
+        play_options=[]
+        
+        #Sorts computer hand to find only cards that can legally be played.
+        #Sorted cards are appended to play_options list
+        for card in self.computer_hand:
+            #If human player discards an 8
+            if last[1] == '8':
+                #If the computer has another 8 to play
+                if card[1] == last[1]:
+                    play_options.append(card)
+                #If the computer has cards of the new suit
+                if card[0] == suit_change:
+                    play_options.append(card)
+            else:
+                #If the computer has cards of the same suit
+                if card[0] == last[0]:
+                    play_options.append(card)
+                #If the computer has cards of the same number
+                if card[1] == last[1]:
+                    play_options.append(card)
+                    
+        #Deletes any possible repeating cards
+        play_options=list(dict.fromkeys(play_options))
+        #Randomly selects a card to discard from play_options
+        discarded_card = random.choice(play_options)
+
+        #Places card in discard pile
+        self.discarded.append(discarded_card)
+
+        #If computer discards an 8
+        if discarded_card[1] == '8':
+            #New suit picked
+            new_suit=random.choice(self.suits)
+            print("New suit is: " + new_suit)
         
     def computer_turn(self):
-        """ Allows the player to perform their turn: choose a new card from the discard pile, or enter the number of the card they want to discard.
-            Will either append card to p_hand or place a card on top of the discard pile.
-        
+        """Allows the computer to perform its turn by drawing the number of cards necessary,
+        and shuffling the discard pile to keep going if there are no more cards.
+ 
         Returns:
-            (str): "You have no more cards!" 
-            (str): "The deck has no more cards!"
+            (str): "The computer has no more cards!" 
+            calculator(): If the computer has run out of cards
             player_turn: if the computer has finished its turn
         """
+        discarded = 0
+        print("It's the computer's turn!")
+        count = 0
+        while discarded == 0 and len(self.deck) > 0:
+            #print("Computer's faces: ", self.computer_hand)
+            print("Discard pile: ", self.discard_pile)
+            discarded = self.computer_options()
+            if discarded == 0:
+                self.computer_hand.append(self.deck.pop())
+                count +=1
+        print(f"The computer drew {count} cards")
+        if len(self.computer_hand) == 0:
+            print("The computer has no more cards!")
+            return self.calculator()
+        elif len(self.deck) == 0:
+            new_deck=shuffle(self.discard_pile)
+            new_deck = self.deck
+            return
+        else:
+            self.player_turn()
             
     def calculator(self):
         """ Calculates the points as according to the Crazy Eight's rules.
