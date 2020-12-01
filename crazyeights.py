@@ -56,7 +56,35 @@ class Game:
         
         Returns: values associated with each card in the deck.
         """
-    
+
+        #Assign faces to values
+        if self.faces == '2':
+            self.value = self.faces 
+        if self.faces == '3':
+            self.value = self.faces
+        if self.faces == '4':
+            self.value = self.faces
+        if self.faces == '5':
+            self.value = self.faces
+        if self.faces == '6':
+            self.value = self.faces
+        if self.faces == '7':
+            self.value = self.faces
+        if self.faces == '8':
+            self.value = '50'
+        if self.faces == '9':
+            self.value = self.faces
+        if self.faces == '10':
+            self.value = '10'
+        if self.faces == 'A':
+            self.value = '10' 
+        if self.faces == 'K':
+            self.value = '10' 
+        if self.faces == 'Q':
+            self.value = '10' 
+        if self.faces == 'J':
+            self.value = '10'
+        
     def player_options(self, selected_card):
         """ Determines whether the card selected to add to the discard pile is allowed to be chosen according to Crazy Eight's rules.
             Only a card of the same face or suit can be discarded.
@@ -243,7 +271,28 @@ class Game:
             player_points(int): # of points the player has @ end of game.
             computer_points(int): # of points the computer scored @ end of game.
         """
-                
+        #Assign player and computer points to empty integers.
+        player_points = int()
+        computer_points = int()
+        
+        #Update player points and computer points according to each cards value.
+        for card in self.player_hand:
+            player_points += self.card_value(card)
+        for card in self.computer_hand:
+            computer_points += self.card_value(card)
+            
+        #if the player gets down to a score of 0 first, the player wins.
+        if player_points == 0:
+            print("You win! :)")
+            print(f"You totaled {player_points} points.")
+            print(f"The computer totaled {computer_points} points.")
+            
+        #if the computer gets down to a score of 0 first, the computer wins.
+        elif computer_points == 0:
+            print("The computer wins. :(")
+            print(f"You totaled {player_points} points.")
+            print(f"The computer totaled {computer_points} points.")  
+                    
     def start(self):
         """ Starts functions required to play Crazy Eight's program.
         
