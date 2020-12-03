@@ -31,8 +31,8 @@ class Game:
             which allows the player to change the suit for the next turn.
             
     """
-
-    def __init__(self, suit):
+#add attributes to this function?
+    def __init__(self):
         """ Initializes all attributes pertinent to the game.   
             
         """
@@ -340,6 +340,7 @@ class Game:
 import crazyeights
 Game()
 
+#office hours work
 if __name__ == "__main__":
     game = Game()
     game.start()
