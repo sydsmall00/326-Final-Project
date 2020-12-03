@@ -32,7 +32,7 @@ class Game:
             
     """
 
-    def __init__(self):
+    def __init__(self, suit):
         """ Initializes all attributes pertinent to the game.   
             
         """
@@ -340,3 +340,6 @@ class Game:
 import crazyeights
 Game()
 
+if __name__ == "__main__":
+    game = Game()
+    game.start()
