@@ -58,6 +58,11 @@ class Game:
             modifies self.p_hand, self.computer_hand, self.discarded. 
                   
         """
+        shuffle(self.deck)
+        for card in range(7):
+            self.player_hand.append(self.deck.pop())
+            self.computer_hand.append(self.deck.pop())
+        self.discard_pile = self.deck.pop()
     
     def card_value(self):
         """ Assigns card values according to the Crazy Eight's rules (based on faces).
