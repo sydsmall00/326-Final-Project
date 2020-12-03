@@ -37,7 +37,7 @@ class Game:
             
         """
         self.suits = ['Heart','Diamond','Spade','Club']
-        self.faces = ''
+        self.faces = ['2','3','4','5','6','7,','8','9','10','J','Q','K','A']
         self.value = ''
         self.deck = [(suit,face) for suit in self.suits for face in self.faces]
         self.p_hand = []
@@ -92,11 +92,12 @@ class Game:
             modifies self.p_hand, self.computer_hand, self.discarded. 
                   
         """
-        shuffle(self.deck)
-        for card in range(7):
-            self.p_hand.append(self.deck.pop())
-            self.computer_hand.append(self.deck.pop())
-        self.discarded = self.deck.pop()
+        random.shuffle(self.deck)
+        for card in self.deck:
+            if len(self.p_hand) <= 7:
+                self.p_hand.append(card)
+                self.computer_hand.append(card)
+        self.discarded = self.deck
         
     def player_options(self, selected_card):
         """ Determines whether the card selected to add to the discard pile is allowed to be chosen 
@@ -179,26 +180,32 @@ class Game:
             Calls the computer's turn.
             
         """
+        discard = 0
+        selected_card = ''
         print("It's your turn to play!")
         # player needs to enter whether need a new card or which card they want to discard
-        selected_card = input("Enter 'new' if you need to draw from the discard pile. \n OR \n Enter the # of card from your hand to discard.")
         # as long as there are cards in the deck
-        while len(self.deck) > 0:
+        while discard == 0 and len(self.deck) > 0:
             print(f"Current discard pile is: \n {self.discarded}")
             print(f"Your current hand is: \n {self.p_hand}")
+            selected_card = input("Enter 'new' if you need to draw from the discard pile. \nOR \nEnter the # of card from your hand to discard.")
             # if player asks for new card
             if selected_card == 'new':
                 # take card from deck and add to hand
-                self.p_hand.append(self.deck.pop())
+                card = self.deck[-1]
+                self.p_hand.append(card)
+                self.deck.remove(card)
             else:
                 # calls player_options to run through chosen card
                 self.player_options(selected_card)
         # if the player has no cards left
         if len(self.p_hand) == 0:
             print("You have no more cards!")
+            return
         # if there are no more cards in the deck
-        if len(self.deck) == 0:
+        elif len(self.deck) == 0:
             print("The deck has no more cards!")
+            return
         else:
             # once player turn is finished, call computer turn
             self.computer_turn()
@@ -330,7 +337,7 @@ class Game:
         """ Starts functions required to play Crazy Eight's program.
         
         """
-        player_name = input("Please enter your player name.")
+        player_name = input("Please enter your player name: ")
         print(f"Welcome, {player_name}!")
         self.card_dealer()
         self.player_turn()
@@ -340,3 +347,7 @@ class Game:
 import crazyeights
 Game()
 
+#office hours work
+if __name__ == "__main__":
+    game = Game()
+    game.start()
