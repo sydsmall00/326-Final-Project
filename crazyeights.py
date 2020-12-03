@@ -180,12 +180,12 @@ class Game:
             Calls the computer's turn.
             
         """
-        discard = 0
+        pile = 0
         selected_card = ''
         print("It's your turn to play!")
         # player needs to enter whether need a new card or which card they want to discard
         # as long as there are cards in the deck
-        while discard == 0 and len(self.deck) > 0:
+        while pile == 0 and len(self.deck) > 0:
             print(f"Current discard pile is: \n {self.discarded}")
             print(f"Your current hand is: \n {self.p_hand}")
             selected_card = input("Enter 'new' if you need to draw from the discard pile. \nOR \nEnter the # of card from your hand to discard.")
@@ -279,14 +279,14 @@ class Game:
             Calls the player's turn.
             
         """
-        discard = 0
+        pile = 0
         print("It's the computer's turn!")
         count = 0
         while len(self.deck) > 0:
             #print("Computer's faces: ", self.computer_hand)
             print("Discard pile: ", self.discarded)
             self.computer_options()
-            if discard == 0:
+            if pile == 0:
                 self.computer_hand.append(self.deck.pop())
                 count +=1
             self.computer_options()
