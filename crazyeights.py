@@ -92,12 +92,12 @@ class Game:
             modifies self.p_hand, self.computer_hand, self.discarded. 
                   
         """
-        new_card=shuffle(self.deck)
-        for card in new_card:
+        random.shuffle(self.deck)
+        for card in self.deck:
             if len(self.p_hand) <= 7:
-                self.p_hand.append(card.pop())
-                self.computer_hand.append(card.pop())
-        self.discarded = self.deck.pop()
+                self.p_hand.append(card)
+                self.computer_hand.append(card)
+        self.discarded = self.deck
         
     def player_options(self, selected_card):
         """ Determines whether the card selected to add to the discard pile is allowed to be chosen 
@@ -345,3 +345,4 @@ Game()
 if __name__ == "__main__":
     game = Game()
     game.start()
+    
