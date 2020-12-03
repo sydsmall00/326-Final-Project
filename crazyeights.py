@@ -286,6 +286,7 @@ class Game:
             if discarded == 0:
                 self.computer_hand.append(self.deck.pop())
                 count +=1
+            self.computer_options()
         print(f"The computer drew {count} cards")
         if len(self.computer_hand) == 0:
             print("The computer has no more cards!")
