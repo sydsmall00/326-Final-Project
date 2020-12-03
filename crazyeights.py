@@ -92,10 +92,11 @@ class Game:
             modifies self.p_hand, self.computer_hand, self.discarded. 
                   
         """
-        shuffle(self.deck)
-        for card in range(7):
-            self.p_hand.append(self.deck.pop())
-            self.computer_hand.append(self.deck.pop())
+        new_card=shuffle(self.deck)
+        for card in new_card:
+            if len(self.p_hand) <= 7:
+                self.p_hand.append(card.pop())
+                self.computer_hand.append(card.pop())
         self.discarded = self.deck.pop()
         
     def player_options(self, selected_card):
