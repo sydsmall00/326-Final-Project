@@ -93,11 +93,11 @@ class Game:
                   
         """
         random.shuffle(self.deck)
-        for card in self.deck:
+        for card in self.deck: 
             if len(self.p_hand) <= 7:
                 self.p_hand.append(card)
                 self.computer_hand.append(card)
-        self.discarded = self.deck
+        self.discarded = self.deck[-1]
         
     def player_options(self, selected_card):
         """ Determines whether the card selected to add to the discard pile is allowed to be chosen 
