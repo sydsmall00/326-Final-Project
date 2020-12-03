@@ -3,7 +3,7 @@
 import pytest
 from crazyeights import Game
 
-test_player_options():
+def test_player_options():
     # test whether the player hand is a list
     assert isinstance(self.p_hand, list), "Player hand should be a list."
     # test whether the discard pile is displaying a card

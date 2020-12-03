@@ -31,7 +31,7 @@ class Game:
             which allows the player to change the suit for the next turn.
             
     """
-
+#add attributes to this function?
     def __init__(self):
         """ Initializes all attributes pertinent to the game.   
             
