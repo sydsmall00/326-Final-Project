@@ -38,6 +38,14 @@ class Game:
         Args:
             Name(str):name of the player to be used throughout the game.   
         """
+        self.suits = ['Heart','Diamond','Spade','Club']
+        self.faces = ['2','3','4','5','6','7','8','9','10','J','Q','K','A']
+        self.value = [2, 3, 4, 5, 6, 7, 50, 9, 10, 10, 10, 10, 10]
+        self.deck = [(suit,face) for suit in self.suits for face in self.faces]
+        self.player_hand = []
+        self.computer_hand = []
+        self.discard_pile = 0
+        self.suit_change = ''
         
     def card_dealer(self):
         """ Assigns cards from deck to player and computer hands. Each receive 7 cards.
