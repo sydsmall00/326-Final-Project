@@ -25,7 +25,7 @@ class Game:
             Crazy Eight's game with 8s holding
             a value of 50, Aces, Kings, Queens, and Jokers holding values of 10, 
             and numbers 2-7 holding their real values.
-        deck (list): A list of all possible suit, face combinations from a 
+        deck (list): A list of all possible suits, face combinations from a 
         normal card deck. For example one possible combination would be 
         [(Heart, Q)].
         p_hand: (list): empty list (of where player's 7 cards will be stored).
@@ -35,7 +35,7 @@ class Game:
             It will only consist of one card, the most recently 'popped' card 
             from either player or computer hands. Default to empty str.
         suit_change (str): empty str of where the new suit in the Crazy Eight's 
-            game will be specified. The suit is chnaged in cases where a player 
+            game will be specified. The suit is changed in cases where a player 
             might play a number, for example an 8, which allows the player to 
             change the suit for the next turn.
     """
@@ -101,7 +101,7 @@ class Game:
             Creates the discard pile.
             
         Side Effects:
-            shuffles self.deck
+            shuffles self.deck using random method.
             modifies self.p_hand, self.computer_hand, self.discarded. 
                   
         """
@@ -133,8 +133,8 @@ class Game:
                                 Ex: '3' for the 3rd card in their hand
             
         Returns:
-            (boolean): True if player performs a valid action, 
-                       False if player performs an invalid action.
+            (boolean): True, if player performs a valid action, 
+                       False, if player performs an invalid action.
             
         Side Effects:
             Changes the top card of the discard pile if a discard occurs.
@@ -192,7 +192,7 @@ class Game:
         """
         selected_card = str()
         print("It's your turn to play!")
-        # player needs to enter whether need a new card or which card they want
+        # player needs to enter whether they need a new card or which card they want.
         # to discard as long as there are cards in the deck
         while len(self.deck) > 0:
             #and pile == 0:
