@@ -6,31 +6,38 @@ from random import shuffle
 
 class Game:
             
-    """ A Crazy Eights card game that can be played between a human and computer program.
-    Objective: Discard your whole hand of cards, so that you have no cards left.
-            Players can discard by matching the card @ the top of the discard pile to a suit/face in your hand.
-            If you do not have any matching cards, then you must draw a card from the deck.
+    """ A Crazy Eights card game that can be played between a human and 
+        computer program.
+    Objective: Discard your full hand of cards, so that you have no cards left.
+            Players can discard by matching the card @ the top of the discard 
+                pile to a suit/face in your hand.
+            If you do not have any matching cards, then you must draw a card 
+                from the deck.
             If you have an '8', you can change the suit of the card.
             First player to have no cards left wins.
             
     Attributes:
-        suits (str): Suits in a normal card deck of Hearts, Diamonds, Spades, and Clubs.
-        faces (str): Each number/rank in a normal card deck with the numbers 1-10 and 
-            "J" for Joker, "K" for King,"Q" for Queen, and "A" for Ace.
-        value (str): Empty string where the values that each rank takes in the Crazy Eight's game with 8s holding
-            a value of 50, Aces, Kings, Queens, and Jokers holding values of 10, and numbers 2-7
-            holding their real values.
-        deck (list): A list of all possible suit, face combinations from a normal card deck.
-            For example one possible combination would be[(Heart, Q)].
+        suits (str): Suits in a normal card deck of Hearts, Diamonds, 
+            Spades, and Clubs.
+        faces (str): Each number/rank in a normal card deck with the numbers 
+            1-10 and "J" for Joker, "K" for King,"Q" for Queen, and "A" for Ace.
+        value (str): Empty string where the values that each rank takes in the 
+            Crazy Eight's game with 8s holding
+            a value of 50, Aces, Kings, Queens, and Jokers holding values of 10, 
+            and numbers 2-7 holding their real values.
+        deck (list): A list of all possible suit, face combinations from a 
+        normal card deck. For example one possible combination would be 
+        [(Heart, Q)].
         p_hand: (list): empty list (of where player's 7 cards will be stored).
-        computer_hand (list): empty list (of where computer's 7 cards will be stored).
+        computer_hand (list): empty list (of where computer's 7 cards will be 
+            stored).
         discarded (list): Cards that the players will discard into a pile. 
-            It will only consist of one card, the most recently 'popped' card from either player or computer hands.
-            Default to empty str.
-        suit_change (str): empty str of where the new suit in the Crazy Eight's game will be specified.
-            The suit is chnaged in cases where a player might play a number, for example an 8,
-            which allows the player to change the suit for the next turn.
-            
+            It will only consist of one card, the most recently 'popped' card 
+            from either player or computer hands. Default to empty str.
+        suit_change (str): empty str of where the new suit in the Crazy Eight's 
+            game will be specified. The suit is chnaged in cases where a player 
+            might play a number, for example an 8, which allows the player to 
+            change the suit for the next turn.
     """
 #add attributes to this function?
     def __init__(self):
@@ -47,11 +54,12 @@ class Game:
         self.suit_change = ''
     
     def card_value(self):
-        """ Assigns card values according to the Crazy Eight's rules (based on faces).
+        """ Assigns card values according to the Crazy Eight's rules 
+        (based on faces).
             All number cards have their number = value,
             Jack, Queen, King, Ace = 10,
             and 8 = 50.
-        
+       
         Returns: values associated with each card in the deck.
         
         Side Effects:
@@ -88,7 +96,8 @@ class Game:
             self.value = '10'    
     
     def card_dealer(self):
-        """ Assigns cards from deck to player and computer hands. Each receive 7 cards.
+        """ Assigns cards from deck to player and computer hands. Each 
+        receive 7 cards.
             Creates the discard pile.
             
         Side Effects:
@@ -104,18 +113,23 @@ class Game:
         self.discarded = discard_card
         
     def player_options(self, selected_card):
-        """ Determines whether the card selected to add to the discard pile is allowed to be chosen 
-            as according to Crazy Eight's rules.
+        """ Determines whether the card selected to add to the discard pile 
+        is allowed to be chosen as according to Crazy Eight's rules.
             Only a card of the same face or suit can be discarded.
             Options:
                     - If the player didn't input a number
-                    - If the player inputted a number larger than they have in their hand (doesn't exist)
-                    - If the player plays an 8, they are able to change the suit
-                    - If the player changes the suit, put down a card that matches
-                    - A "normal" turn: The player plays a card in their hand that matches the suit or face.
-            
+                    - If the player inputted a number larger than they have in 
+                    their hand (doesn't exist)
+                    - If the player plays an 8, they are able to change the 
+                    suit
+                    - If the player changes the suit, put down a card that 
+                    matches
+                    - A "normal" turn: The player plays a card in their hand 
+                    that matches the suit or face.
+           
         Args:
-            selected_card(str): the card the player chooses to add to the discard pile. 
+            selected_card(str): the card the player chooses to add to the 
+            discard pile. 
                                 Ex: '3' for the 3rd card in their hand
             
         Returns:
@@ -131,32 +145,39 @@ class Game:
         if self.p_hand[int(selected_card)-1][1] == '8':
             print(f"Suit is {self.discarded[0]}.\n")
             self.discarded = self.p_hand[int(selected_card)-1]
-            self.p_hand.remove(self.p_hand[int(selected_card)-1])
-            self.suit_change = input("Please enter a new suit: Heart, Diamond, Spade, Club.\n")
+            self.p_hand.remove(self.p_hand[int(selected_card)-1]) 
+            self.suit_change = input("Please enter a new suit: Heart, " +
+                                     "Diamond, Spade, Club.\n")
             print(f"New suit is: {self.suit_change}")
             self.discarded = (self.suit_change, '')
             return True
-        # if the suit in the selected card equals the suit or face equals the face
-        if self.p_hand[int(selected_card)-1][0] == self.discarded[0] or self.p_hand[int(selected_card)-1][1] == self.discarded[1]:
+        # if the suit in the selected card equals the suit or face equals 
+        # the face
+        if self.p_hand[int(selected_card)-1][0] == self.discarded[0] or self.p_hand[
+            int(selected_card)-1][1] == self.discarded[1]:
             # add to top of discard pile
             self.discarded = self.p_hand.pop(int(selected_card)-1)
             print(f"You played: {self.discarded}\n")
-            return True
+            return True 
         else:
-            print("You need to match discard pile card suit or rank. Please choose a different card.\n")
+            print("You need to match discard pile card suit or rank. Please "+ 
+                  "choose a different card.\n")
             return False
         # If the user does not input a number, return false
         if selected_card.isdigit() is False:
             return False
-        # If the user inputs a number greater than the amount in their hand, return 0
+        # If the user inputs a number greater than the amount in their hand,
+        # return 0
         if len(self.p_hand) < int(selected_card):
-            print("The number of card entered is greater than number of cards in your hand! \n Please choose a different card.")
+            print("The number of card entered is greater than number of cards"+ 
+                  "in your hand! \n Please choose a different card.")
             return False
-            
+          
     def player_turn(self):
-        """ Allows the player to perform their turn: choose a new card from the discard pile, 
-            or enter the number of the card they want to discard.
-            Will either append card to p_hand or place a card on top of the discard pile.
+        """ Allows the player to perform their turn: choose a new card from 
+            the discard pile, or enter the number of the card they want to 
+            discard. Will either append card to p_hand or place a card on top 
+            of the discard pile.
             
         Returns: 
             (str): "You have no more cards!" 
@@ -167,18 +188,20 @@ class Game:
             Removes card from deck and adds to player's hand.
             Ends the game if no more cards.
             Calls the computer's turn.
-            
+
         """
         selected_card = str()
         print("It's your turn to play!")
-        # player needs to enter whether need a new card or which card they want to discard
-        # as long as there are cards in the deck
+        # player needs to enter whether need a new card or which card they want
+        # to discard as long as there are cards in the deck
         while len(self.deck) > 0:
             #and pile == 0:
             print(f"Current discard pile is: \n {self.discarded}")
             print(f"Your current hand is: \n {self.p_hand}")
-            selected_card = input("Enter 'new' if you need to draw a card.\
-                \nOR \nEnter the # of card from your hand to discard\nOR\nEnter 'exit' if you want to end the game: ")
+            selected_card = input("Enter 'new' if you need to draw a "+
+                                  "card.\\nOR \nEnter the # of card from "+
+                                  "your hand to discard\nOR\nEnter 'exit' if "+ 
+                                  "you want to end the game: ")
             if selected_card == 'exit':
                 sys.exit('You chose to stop the game. See you later!')
             # if player asks for new card
@@ -204,15 +227,16 @@ class Game:
             self.computer_turn()
             
     def computer_options(self):
-        """ Selects card for the computer to play according to Crazy Eight's rules.
-            Only a card of the same face or suit can be discarded. If an 8 is played,
-            a new suit can be chosen by the computer for future rounds.
+        """ Selects card for the computer to play according to Crazy 
+        Eight's rules. Only a card of the same face or suit can be 
+        discarded. If an 8 is played, a new suit can be chosen by the 
+        computer for future rounds.
             
             Parameters:
                 last(tuple): Top card of the discard pile
                 play_options(list): Options for the computer to choose from
                 discarded_card(tuple): Card that is discarded by the computer
-            
+
             Side Effects:
             Changes the top card of the discard pile if a discard occurs.
             Removes cards from computer's hand.
@@ -257,8 +281,9 @@ class Game:
             print(f"New suit is: {new_suit}")
         
     def computer_turn(self):
-        """ Allows the computer to perform its turn by drawing the number of cards necessary,
-        and shuffling the discard pile to keep going if there are no more cards.
+        """ Allows the computer to perform its turn by drawing the number 
+        of cards necessary, and shuffling the discard pile to keep going 
+        if there are no more cards.
  
         Returns:
             (str): "The computer has no more cards!" 
@@ -289,14 +314,15 @@ class Game:
             return self.calculator()
         else:
             self.player_turn()
-            
+           
     def calculator(self):
         """ Calculates the points as according to the Crazy Eight's rules.
             Adds the values of the cards in player and computer hands,
             whoever's is lowest (0) wins.
             
         Returns: 
-            winner(str): the winner of the game (whoever has zero or lowest score).
+            winner(str): the winner of the game (whoever has zero or lowest 
+            score).
             player_points(int): # of points the player has @ end of game.
             computer_points(int): # of points the computer scored @ end of game.
             
