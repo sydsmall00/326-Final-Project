@@ -40,11 +40,11 @@ class Game:
         self.suits = ['Heart','Diamond','Spade','Club']
         self.faces = ['2','3','4','5','6','7,','8','9','10','J','Q','K','A']
         self.value = ''
+        self.suit_change = ''
         self.deck = [(suit,face) for suit in self.suits for face in self.faces]
         self.p_hand = []
         self.computer_hand = []
         self.discarded = []
-        self.suit_change = ''
     
     def card_value(self):
         """ Assigns card values according to the Crazy Eight's rules (based on faces).
@@ -194,11 +194,11 @@ class Game:
         # if the player has no cards left
         if len(self.p_hand) == 0:
             print("You have no more cards!")
-            return
+            return self.calculator
         # if there are no more cards in the deck
         elif len(self.deck) == 0:
             print("The deck has no more cards!")
-            return
+            return self.calculator
         else:
             # once player turn is finished, call computer turn
             self.computer_turn()
@@ -296,7 +296,6 @@ class Game:
             whoever's is lowest (0) wins.
             
         Returns: 
-            winner(str): the winner of the game (whoever has zero or lowest score).
             player_points(int): # of points the player has @ end of game.
             computer_points(int): # of points the computer scored @ end of game.
             
