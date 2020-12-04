@@ -1,5 +1,6 @@
 # Programmers: Dagmawit Asfaw, Aaron Rapaka, Fernando Sierra, Sydney Small
 
+import sys
 import random
 from random import shuffle
 
@@ -14,7 +15,7 @@ class Game:
             
     Attributes:
         suits (str): Suits in a normal card deck of Hearts, Diamonds, Spades, and Clubs.
-        faces (str): Empty string where each number/rank in a normal card deck with the numbers 1-10 and 
+        faces (str): Each number/rank in a normal card deck with the numbers 1-10 and 
             "J" for Joker, "K" for King,"Q" for Queen, and "A" for Ace.
         value (str): Empty string where the values that each rank takes in the Crazy Eight's game with 8s holding
             a value of 50, Aces, Kings, Queens, and Jokers holding values of 10, and numbers 2-7
@@ -53,9 +54,12 @@ class Game:
         
         Returns: values associated with each card in the deck.
         
+        Side Effects:
+            Gives value to faces.
+            
         """
 
-        #Assign faces to values
+        # Assign faces to values
         if self.faces == '2':
             self.value = self.faces 
         if self.faces == '3':
@@ -93,11 +97,11 @@ class Game:
                   
         """
         random.shuffle(self.deck)
-        for card in self.deck: 
-            if len(self.p_hand) <= 7:
-                self.p_hand.append(card)
-                self.computer_hand.append(card)
-        self.discarded = self.deck[-1]
+        for card in range(7): 
+            self.p_hand.append(self.deck.pop(0))
+            self.computer_hand.append(self.deck.pop(0))
+        discard_card = self.deck[0]
+        self.discarded = discard_card
         
     def player_options(self, selected_card):
         """ Determines whether the card selected to add to the discard pile is allowed to be chosen 
@@ -123,39 +127,22 @@ class Game:
             Removes cards from player's hand.
             Adds cards to player's hand.
         """
-       # If there is no suit change needed, allow regular discard (of suit or face)
-        if self.suit_change == '':
-            # if the suit in the selected card equals the suit or face equals the face
-            if self.p_hand[int(selected_card)-1][0] == self.discarded[0] or self.p_hand[int(selected_card)-1][1] == self.discarded[1]:
-                # add to top of discard pile
-                self.discarded.append(self.p_hand.pop(int(selected_card)-1))
-                print(f"You drew: {self.p_hand[int(selected_card)-1]}")
-                return True
-            else:
-                print("You need to match discard pile card suit or rank. Please choose a different card.")
-                return False
         # If the player plays an '8', change the suit
         if self.p_hand[int(selected_card)-1][1] == '8':
-            self.discarded = self.p_hand.pop(int(selected_card)-1)
-            self.suit_change= ''
-            print(f"Suit is {self.discarded}.")
-            print("What do you want to do?")
-            while self.suit_change not in ['Heart','Diamond','Spade','Club']:
-                self.suit_change = input("Please enter a new suit: Heart, Diamond, Spade, Club.")
+            print(f"Suit is {self.discarded[0]}.\n")
+            self.suit_change = input("Please enter a new suit: Heart, Diamond, Spade, Club.\n")
             print(f"New suit is: {self.suit_change}")
+            self.discarded = (self.suit_change, '')
             return True
-        # If the suit is changed
-        if self.suit_change != '':
-            # if the suit in the selected card equals the suit
-            if self.p_hand[int(selected_card)-1][0] == self.suit_change:
-                # add to top of discard pile
-                self.discarded.append(self.p_hand.pop(int(selected_card)-1))
-                # reset suit change
-                self.suit_change = ''
-                return True
-            else:
-                print("You need to match the changed suit. Please choose a different card to discard.")
-                return False
+        # if the suit in the selected card equals the suit or face equals the face
+        if self.p_hand[int(selected_card)-1][0] == self.discarded[0] or self.p_hand[int(selected_card)-1][1] == self.discarded[1]:
+            # add to top of discard pile
+            self.discarded = self.p_hand.pop(int(selected_card)-1)
+            print(f"You played: {self.discarded}\n")
+            return True
+        else:
+            print("You need to match discard pile card suit or rank. Please choose a different card.\n")
+            return False
         # If the user does not input a number, return false
         if selected_card.isdigit() is False:
             return False
@@ -163,7 +150,7 @@ class Game:
         if len(self.p_hand) < int(selected_card):
             print("The number of card entered is greater than number of cards in your hand! \n Please choose a different card.")
             return False
-   
+            
     def player_turn(self):
         """ Allows the player to perform their turn: choose a new card from the discard pile, 
             or enter the number of the card they want to discard.
@@ -180,15 +167,18 @@ class Game:
             Calls the computer's turn.
             
         """
-        pile = 0
-        selected_card = ''
+        selected_card = str()
         print("It's your turn to play!")
         # player needs to enter whether need a new card or which card they want to discard
         # as long as there are cards in the deck
-        while pile == 0 and len(self.deck) > 0:
+        while len(self.deck) > 0:
+            #and pile == 0:
             print(f"Current discard pile is: \n {self.discarded}")
             print(f"Your current hand is: \n {self.p_hand}")
-            selected_card = input("Enter 'new' if you need to draw from the discard pile. \nOR \nEnter the # of card from your hand to discard.")
+            selected_card = input("Enter 'new' if you need to draw a card.\
+                \nOR \nEnter the # of card from your hand to discard\nOR\nEnter 'exit' if you want to end the game: ")
+            if selected_card == 'exit':
+                sys.exit('You chose to stop the game. See you later!')
             # if player asks for new card
             if selected_card == 'new':
                 # take card from deck and add to hand
@@ -198,6 +188,7 @@ class Game:
             else:
                 # calls player_options to run through chosen card
                 self.player_options(selected_card)
+                break
         # if the player has no cards left
         if len(self.p_hand) == 0:
             print("You have no more cards!")
@@ -234,6 +225,7 @@ class Game:
         #Sorts computer hand to find only cards that can legally be played.
         #Sorted cards are appended to play_options list
         for card in self.computer_hand:
+            print(last[1])
             #If human player discards an 8
             if last[1] == '8':
                 #If the computer has another 8 to play
