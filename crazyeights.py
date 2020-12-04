@@ -314,14 +314,14 @@ class Game:
         for card in self.computer_hand:
             computer_points += self.card_value()
             
-        #if the player gets down to a score of 0 first, the player wins.
-        if player_points == 0:
+        #if the player gets down to 0 cards, the player wins.
+        if len(self.deck) == 0: 
             print("You win! :)")
             print(f"You totaled {player_points} points.")
             print(f"The computer totaled {computer_points} points.")
             
-        #if the computer gets down to a score of 0 first, the computer wins.
-        elif computer_points == 0:
+        #if the computer gets down to 0 cards, the computer wins.
+        elif len(self.computer_hand) == 0:
             print("The computer wins. :(")
             print(f"You totaled {player_points} points.")
             print(f"The computer totaled {computer_points} points.")  
