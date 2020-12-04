@@ -130,6 +130,8 @@ class Game:
         # If the player plays an '8', change the suit
         if self.p_hand[int(selected_card)-1][1] == '8':
             print(f"Suit is {self.discarded[0]}.\n")
+            self.discarded = self.p_hand[int(selected_card)-1]
+            self.p_hand.remove(self.p_hand[int(selected_card)-1])
             self.suit_change = input("Please enter a new suit: Heart, Diamond, Spade, Club.\n")
             print(f"New suit is: {self.suit_change}")
             self.discarded = (self.suit_change, '')
@@ -218,14 +220,12 @@ class Game:
             
             """
         #Top card in the discard pile
-        last= self.discarded[-1]
+        last= self.discarded
         #A list of cards that the computer can legally discard
         play_options=[]
-        
         #Sorts computer hand to find only cards that can legally be played.
         #Sorted cards are appended to play_options list
         for card in self.computer_hand:
-            print(last[1])
             #If human player discards an 8
             if last[1] == '8':
                 #If the computer has another 8 to play
@@ -248,7 +248,7 @@ class Game:
         discarded_card = random.choice(play_options)
 
         #Places card in discard pile
-        self.discarded.append(discarded_card)
+        self.discarded = discarded_card
 
         #If computer discards an 8
         if discarded_card[1] == '8':
@@ -271,20 +271,21 @@ class Game:
             Calls the player's turn.
             
         """
-        pile = 0
         print("It's the computer's turn!")
         count = 0
         while len(self.deck) > 0:
-            #print("Computer's faces: ", self.computer_hand)
             print("Discard pile: ", self.discarded)
             self.computer_options()
-            if pile == 0:
-                self.computer_hand.append(self.deck.pop())
-                count +=1
+            self.computer_hand.append(self.deck.pop(0))
+            count +=1
             self.computer_options()
-        print(f"The computer drew {count} cards")
-        if len(self.computer_hand) == 0:
-            print("The computer has no more cards!")
+            break
+        print(f"The computer drew {count} card(s).\n")
+        if len(self.deck) == 0:
+            print("The deck is out of cards.\n")
+            return self.calculator()
+        elif len(self.computer_hand) == 0:
+            print("The computer has no more cards!\n")
             return self.calculator()
         else:
             self.player_turn()
