@@ -14,6 +14,7 @@ class Game:
             First player to have no cards left wins.
             
     Attributes:
+<<<<<<< HEAD
         suits (str): Suits in a normal card deck of Hearts, Diamonds, Spades, and Clubs.
         faces (str): Each number/rank in a normal card deck with the numbers 1-10 and 
             "J" for Joker, "K" for King,"Q" for Queen, and "A" for Ace.
@@ -22,15 +23,37 @@ class Game:
             holding their real values.
         deck (list): A list of all possible suit, face combinations from a normal card deck.
             For example one possible combination would be[(Heart, Q)].
+=======
+        suits (str): Suits in a normal card deck of Hearts, Diamonds, 
+            Spades, and Clubs.
+        faces (str): Each number/rank in a normal card deck with the numbers 
+            1-10 and "J" for Joker, "K" for King,"Q" for Queen, and "A" for Ace.
+        value (str): Empty string where the values that each rank takes in the 
+            Crazy Eight's game with 8s holding
+            a value of 50, Aces, Kings, Queens, and Jokers holding values of 10, 
+            and numbers 2-7 holding their real values.
+        deck (list): A list of all possible suits, face combinations from a 
+        normal card deck. For example one possible combination would be 
+        [(Heart, Q)].
+>>>>>>> 7e67ad7cec0acafae3566e98d217d18cc2bb74ab
         p_hand: (list): empty list (of where player's 7 cards will be stored).
         computer_hand (list): empty list (of where computer's 7 cards will be stored).
         discarded (list): Cards that the players will discard into a pile. 
+<<<<<<< HEAD
             It will only consist of one card, the most recently 'popped' card from either player or computer hands.
             Default to empty str.
         suit_change (str): empty str of where the new suit in the Crazy Eight's game will be specified.
             The suit is chnaged in cases where a player might play a number, for example an 8,
             which allows the player to change the suit for the next turn.
             
+=======
+            It will only consist of one card, the most recently 'popped' card 
+            from either player or computer hands. Default to empty str.
+        suit_change (str): empty str of where the new suit in the Crazy Eight's 
+            game will be specified. The suit is changed in cases where a player 
+            might play a number, for example an 8, which allows the player to 
+            change the suit for the next turn.
+>>>>>>> 7e67ad7cec0acafae3566e98d217d18cc2bb74ab
     """
 #add attributes to this function?
     def __init__(self):
@@ -61,38 +84,38 @@ class Game:
 
         # Assign faces to values
         if self.faces == '2':
-            self.value = self.faces 
+            self.value = int(self.faces) 
         if self.faces == '3':
-            self.value = self.faces
+            self.value = int(self.faces)
         if self.faces == '4':
-            self.value = self.faces
+            self.value = int(self.faces)
         if self.faces == '5':
-            self.value = self.faces
+            self.value = int(self.faces)
         if self.faces == '6':
-            self.value = self.faces
+            self.value = int(self.faces)
         if self.faces == '7':
-            self.value = self.faces
+            self.value = int(self.faces)
         if self.faces == '8':
-            self.value = '50'
+            self.value = 50
         if self.faces == '9':
-            self.value = self.faces
+            self.value = int(self.faces)
         if self.faces == '10':
-            self.value = '10'
+            self.value = 10
         if self.faces == 'A':
-            self.value = '10' 
+            self.value = 10 
         if self.faces == 'K':
-            self.value = '10' 
+            self.value = 10 
         if self.faces == 'Q':
-            self.value = '10' 
+            self.value = 10 
         if self.faces == 'J':
-            self.value = '10'    
+            self.value = 10    
     
     def card_dealer(self):
         """ Assigns cards from deck to player and computer hands. Each receive 7 cards.
             Creates the discard pile.
             
         Side Effects:
-            shuffles self.deck
+            shuffles self.deck using random method.
             modifies self.p_hand, self.computer_hand, self.discarded. 
                   
         """
@@ -119,8 +142,8 @@ class Game:
                                 Ex: '3' for the 3rd card in their hand
             
         Returns:
-            (boolean): True if player performs a valid action, 
-                       False if player performs an invalid action.
+            (boolean): True, if player performs a valid action, 
+                       False, if player performs an invalid action.
             
         Side Effects:
             Changes the top card of the discard pile if a discard occurs.
@@ -171,8 +194,13 @@ class Game:
         """
         selected_card = str()
         print("It's your turn to play!")
+<<<<<<< HEAD
         # player needs to enter whether need a new card or which card they want to discard
         # as long as there are cards in the deck
+=======
+        # player needs to enter whether they need a new card or which card they want.
+        # to discard as long as there are cards in the deck
+>>>>>>> 7e67ad7cec0acafae3566e98d217d18cc2bb74ab
         while len(self.deck) > 0:
             #and pile == 0:
             print(f"Current discard pile is: \n {self.discarded}")
@@ -281,7 +309,7 @@ class Game:
             self.computer_options()
             break
         print(f"The computer drew {count} card(s).\n")
-        if len(self.deck) == 0:
+        if len(self.p_hand) == 0:
             print("The deck is out of cards.\n")
             return self.calculator()
         elif len(self.computer_hand) == 0:
@@ -309,18 +337,18 @@ class Game:
         
         #Update player points and computer points according to each cards value.
         for card in self.p_hand:
-            player_points += self.card_value()
+            player_points += self.value()
         for card in self.computer_hand:
-            computer_points += self.card_value()
+            computer_points += self.value()
             
-        #if the player gets down to a score of 0 first, the player wins.
-        if player_points == 0:
+        #if the player gets down to 0 cards, the player wins.
+        if len(self.p_hand) == 0: 
             print("You win! :)")
             print(f"You totaled {player_points} points.")
             print(f"The computer totaled {computer_points} points.")
             
-        #if the computer gets down to a score of 0 first, the computer wins.
-        elif computer_points == 0:
+        #if the computer gets down to 0, the computer wins.
+        elif len(self.computer_hand) == 0:
             print("The computer wins. :(")
             print(f"You totaled {player_points} points.")
             print(f"The computer totaled {computer_points} points.")  
