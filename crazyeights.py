@@ -290,13 +290,13 @@ class Game:
             
         """
         print("It's the computer's turn!\n")
-        count = 0
+        # count = 0
         while len(self.deck) > 0:
             print(f"Discard pile: {self.discarded}\n")
             self.computer_options()
             break
-            print(f"The computer drew {self.count} card(s).\n")
         self.count = 0
+        print(f"The computer drew {self.count} card(s).\n")
         if len(self.deck) == 0:
             print("The deck is out of cards.\n")
             return self.calculator
