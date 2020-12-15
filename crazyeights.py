@@ -42,7 +42,7 @@ class Game:
         """
         self.suits = ['Heart','Diamond','Spade','Club']
         self.faces = ['2','3','4','5','6','7,','8','9','10','J','Q','K','A']
-        self.value = ''
+        self.value = int()
         self.deck = [(suit,face) for suit in self.suits for face in self.faces]
         self.p_hand = []
         self.computer_hand = []
