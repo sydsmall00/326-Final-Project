@@ -14,16 +14,6 @@ class Game:
             First player to have no cards left wins.
             
     Attributes:
-<<<<<<< HEAD
-        suits (str): Suits in a normal card deck of Hearts, Diamonds, Spades, and Clubs.
-        faces (str): Each number/rank in a normal card deck with the numbers 1-10 and 
-            "J" for Joker, "K" for King,"Q" for Queen, and "A" for Ace.
-        value (str): Empty string where the values that each rank takes in the Crazy Eight's game with 8s holding
-            a value of 50, Aces, Kings, Queens, and Jokers holding values of 10, and numbers 2-7
-            holding their real values.
-        deck (list): A list of all possible suit, face combinations from a normal card deck.
-            For example one possible combination would be[(Heart, Q)].
-=======
         suits (str): Suits in a normal card deck of Hearts, Diamonds, 
             Spades, and Clubs.
         faces (str): Each number/rank in a normal card deck with the numbers 
@@ -35,25 +25,15 @@ class Game:
         deck (list): A list of all possible suits, face combinations from a 
         normal card deck. For example one possible combination would be 
         [(Heart, Q)].
->>>>>>> 7e67ad7cec0acafae3566e98d217d18cc2bb74ab
         p_hand: (list): empty list (of where player's 7 cards will be stored).
         computer_hand (list): empty list (of where computer's 7 cards will be stored).
         discarded (list): Cards that the players will discard into a pile. 
-<<<<<<< HEAD
-            It will only consist of one card, the most recently 'popped' card from either player or computer hands.
-            Default to empty str.
-        suit_change (str): empty str of where the new suit in the Crazy Eight's game will be specified.
-            The suit is chnaged in cases where a player might play a number, for example an 8,
-            which allows the player to change the suit for the next turn.
-            
-=======
             It will only consist of one card, the most recently 'popped' card 
             from either player or computer hands. Default to empty str.
         suit_change (str): empty str of where the new suit in the Crazy Eight's 
             game will be specified. The suit is changed in cases where a player 
             might play a number, for example an 8, which allows the player to 
             change the suit for the next turn.
->>>>>>> 7e67ad7cec0acafae3566e98d217d18cc2bb74ab
     """
 #add attributes to this function?
     def __init__(self):
@@ -194,13 +174,8 @@ class Game:
         """
         selected_card = str()
         print("It's your turn to play!")
-<<<<<<< HEAD
-        # player needs to enter whether need a new card or which card they want to discard
-        # as long as there are cards in the deck
-=======
         # player needs to enter whether they need a new card or which card they want.
         # to discard as long as there are cards in the deck
->>>>>>> 7e67ad7cec0acafae3566e98d217d18cc2bb74ab
         while len(self.deck) > 0:
             #and pile == 0:
             print(f"Current discard pile is: \n {self.discarded}")
@@ -338,9 +313,9 @@ class Game:
         
         #Update player points and computer points according to each cards value.
         for card in self.p_hand:
-            player_points += self.value()
+            player_points += self.value
         for card in self.computer_hand:
-            computer_points += self.value()
+            computer_points += self.value
             
         #if the player gets down to 0 cards, the player wins.
         if len(self.p_hand) == 0: 
