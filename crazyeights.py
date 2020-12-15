@@ -48,6 +48,7 @@ class Game:
         self.computer_hand = []
         self.discarded = []
         self.suit_change = ''
+        self.count=0
     
     def card_value(self):
         """ Assigns card values according to the Crazy Eight's rules (based on faces).
@@ -225,7 +226,7 @@ class Game:
         #Top card in the discard pile
         last= self.discarded
         #A list of cards that the computer can legally discard
-        play_options=[]
+        self.play_options=[]
         #Sorts computer hand to find only cards that can legally be played.
         #Sorted cards are appended to play_options list
         for card in self.computer_hand:
@@ -233,32 +234,49 @@ class Game:
             if last[1] == '8':
                 #If the computer has another 8 to play
                 if card[1] == last[1]:
-                    play_options.append(card)
+                    self.play_options.append(card)
+                    self.computer_hand.remove(card)
                 #If the computer has cards of the new suit
                 if card[0] == self.suit_change:
-                    play_options.append(card)
+                    self.play_options.append(card)
+                    self.computer_hand.remove(card)
             else:
                 #If the computer has cards of the same suit
                 if card[0] == last[0]:
-                    play_options.append(card)
+                    self.play_options.append(card)
+                    self.computer_hand.remove(card)
                 #If the computer has cards of the same number
                 if card[1] == last[1]:
-                    play_options.append(card)
-                    
-        #Deletes any possible repeating cards
-        play_options=list(dict.fromkeys(play_options))
-        #Randomly selects a card to discard from play_options
-        discarded_card = random.choice(play_options)
+                    self.play_options.append(card)
+                    self.computer_hand.remove(card)
 
-        #Places card in discard pile
-        self.discarded = discarded_card
+        if len(self.play_options) > 0:
+            discarded_card = random.choice(self.play_options)
+            self.play_options.remove(discarded_card)
 
-        #If computer discards an 8
-        if discarded_card[1] == '8':
-            #New suit picked
-            new_suit=random.choice(self.suits)
-            print(f"New suit is: {new_suit}")
-        
+            #Places card in discard pile
+            self.discarded = discarded_card
+
+            #If computer discards an 8
+            if discarded_card[1] == '8':
+                #New suit picked
+                new_suit=random.choice(self.suits)
+                print(f"New suit is: {new_suit}")
+            
+            
+            self.computer_hand.extend(self.play_options)    
+            del self.play_options[:]
+        else:
+            self.c_draw_count()
+
+    def c_draw_count(self):
+        while len(self.play_options) == 0:
+            #print(self.deck)
+            self.computer_hand.append(self.deck.pop(0))
+            self.count +=1
+            self.computer_options()
+            break
+            
     def computer_turn(self):
         """ Allows the computer to perform its turn by drawing the number of cards necessary,
         and shuffling the discard pile to keep going if there are no more cards.
@@ -279,12 +297,10 @@ class Game:
         while len(self.deck) > 0:
             print("Discard pile: ", self.discarded)
             self.computer_options()
-            self.computer_hand.append(self.deck.pop(0))
-            count +=1
-            self.computer_options()
             break
-        print(f"The computer drew {count} card(s).\n")
-        if len(self.p_hand) == 0:
+        print(f"The computer drew {self.count} card(s).\n")
+        self.count=0
+        if len(self.deck) == 0:
             print("The deck is out of cards.\n")
             return self.calculator()
         elif len(self.computer_hand) == 0:
@@ -328,22 +344,14 @@ class Game:
             print("The computer wins. :(")
             print(f"You totaled {player_points} points.")
             print(f"The computer totaled {computer_points} points.")  
-                    
-    def start(self):
-        """ Starts functions required to play Crazy Eight's program.
-        
-        """
-        player_name = input("Please enter your player name: ")
-        print(f"Welcome, {player_name}!")
-        self.card_dealer()
-        self.player_turn()
-        self.calculator()
-    
-# Call class and function to start
-import crazyeights
-Game()
 
-#office hours work
 if __name__ == "__main__":
+    print("------------------------------*Game*------------------------------")
     game = Game()
-    game.start()
+    player_name = input("Please enter your player name: ")
+    print(f"Welcome, {player_name}!")
+    game.card_dealer()
+    game.player_turn()
+    game.calculator()
+    
+    # python3 crazyeights.py
