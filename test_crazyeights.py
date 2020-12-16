@@ -37,3 +37,25 @@ def test_card_value():
     assert g.card_value('8') == 8
     assert g.card_value('9') == 9
     assert g.card_value('10') == 10
+    
+def test_computer_options():
+    g = Game()
+    g.suits = ['Diamond']
+    g.computer_hand == [('Club', '7'), ('Spade', '3'), ('Spade', '8'), ('Heart', '9')]
+  
+    if g.discarded == ('Spade', '4'): #In the instance where the suits match
+        assert g.discarded == ('Spade', '3') or ('Spade', '8')
+      
+    if g.discarded == ('Diamond', '9'): #In the instance where the numbers match
+        assert g.discarded == ('Heart', '9')
+      
+    if g.discarded == ('Club', '8'): #In the instance where an 8 is played
+        assert g.discarded == ('Spade', '8')
+        assert print("New suit is: Diamond")
+      
+    if g.suit_change == "Club": #In the instance where the suit is changed by the player
+        assert g.discarded == ('Club', '7')
+      
+    if g.discarded == ('Diamond', '2'): #In the instance where the computer must draw
+        assert g.c_draw_count()
+
