@@ -35,7 +35,6 @@ def test_card_value():
     assert g.card_value('5') == 5
     assert g.card_value('6') == 6
     assert g.card_value('7') == 7
-    assert g.card_value('8') == 8
     assert g.card_value('9') == 9
     assert g.card_value('10') == 10
     
