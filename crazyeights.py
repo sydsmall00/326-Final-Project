@@ -341,7 +341,7 @@ class Game:
         # if the computer gets down to 0, the computer wins.
         elif len(self.computer_hand) == 0:
             print("The computer wins since it reached 0 points. :(")
-            print(f"You still had {player_points} points {len(self.p_hand)} cards left.")
+            print(f"You still had {player_points} points and {len(self.p_hand)} cards left.")
 
 def main():
     print("------------------------------*Game*------------------------------")
