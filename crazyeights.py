@@ -43,7 +43,7 @@ class Game:
             
         """
         self.suits = ['Heart','Diamond','Spade','Club']
-        self.faces = ['2','3','4','5','6','7,','8','9','10','J','Q','K','A']
+        self.faces = ['2','3','4','5','6','7','8','9','10','J','Q','K','A']
         self.value = int()
         self.suit_change = ''
         self.deck = [(suit,face) for suit in self.suits for face in self.faces]
@@ -80,9 +80,7 @@ class Game:
             Changes/gives a value to each face. """
         
         for face in self.faces:
-            if face == '8':
-                self.value = 50
-            elif face.isdigit():
+            if face in ['2','3','4','5','6','7','8','9','10']:
                 self.value = int(face)
             elif face in ['J','Q','K','A']:
                 self.value = 10
@@ -125,7 +123,9 @@ class Game:
             print(f"Suit is {self.discarded[0]}.\n")
             self.discarded = self.p_hand[int(selected_card)-1]
             self.p_hand.remove(self.p_hand[int(selected_card)-1])
-            self.suit_change = input("Please enter a new suit: Heart, Diamond, Spade, Club.\n")
+            suit_input = input("Please enter a new suit: Heart, Diamond, Spade, Club.\n")
+            suit_input = suit_input.capitalize()
+            self.suit_change = suit_input
             print(f"New suit is: {self.suit_change}")
             self.discarded = (self.suit_change, '')
             return True
@@ -323,9 +323,10 @@ class Game:
         #Update player points and computer points according to each cards value.
         for face in self.p_hand:
             player_points += self.card_value(face)
+            print(self.value)
         for face in self.computer_hand:
             computer_points += self.card_value(face)
-            
+            print(self.value)
         #if the player gets down to 0 cards, the player wins.
         if len(self.p_hand) == 0: 
             print("You win since you reached 0 points! :)")
