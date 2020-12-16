@@ -22,7 +22,6 @@ def test_init():
 
 def test_card_value():
     g = Game()
-    assert g.card_value('1') == 1
     assert g.card_value('8') == 50
     assert g.card_value('K') == 10
     assert g.card_value('J') == 10
