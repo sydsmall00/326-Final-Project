@@ -324,10 +324,10 @@ class Game:
     
         #Update player points and computer points according to each cards value.
         for face in self.p_hand:
-            player_points += self.card_value(face)
+            player_points += self.card_value(face[1])
             print(self.value)
         for face in self.computer_hand:
-            computer_points += self.card_value(face)
+            computer_points += self.card_value(face[1])
             print(self.value)
         #if the player gets down to 0 cards, the player wins.
         if len(self.p_hand) == 0: 
