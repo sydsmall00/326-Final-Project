@@ -7,19 +7,21 @@ def test_init():
     g = Game()
     assert isinstance(g.suits, list), "The suits attribute should be a list of suits."
     assert len(g.suits) == 4, "There should be 4 suits."
-    assert isinstance(g.suits[0:], str), "Each suit should be a string."
+    for suit in g.suits:
+        assert isinstance(suit, str), "Each suit should be a string."
     assert isinstance(g.faces, list), "The faces attribute should be a list of faces."
     assert len(g.faces) == 13, "There should be 13 faces."
-    assert isinstance(g.faces[0:], str), "Each face should be a string."
+    for face in g.faces:
+        assert isinstance(face, str), "Each face should be a string."
     assert isinstance(g.value, int), "The value attribute should be an integer."
     assert isinstance(g.deck, list), "The deck should be a list."
-    assert isinstance(g.deck[0:], tuple), "The deck should hold cards as tuples."
-    for attr in ["suit", "face"]:
-        assert hasattr(g.deck[0], attr), "The cards should be a suit, face"
+    for card in g.deck:
+        assert isinstance(card, tuple), "The deck should hold cards as tuples."
+    assert len(g.deck) == 52, "The deck should hold 52 cards."
     assert len(g.p_hand) == 0, "Player hand should have no objects."
     assert len(g.computer_hand) == 0, "Computer hand should have no objects."
     assert len(g.discarded) == 0, "The discard pile should have no objects."
-
+    
 def test_card_value():
     g = Game()
     assert g.card_value('1') == 1
