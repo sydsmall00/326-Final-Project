@@ -79,11 +79,13 @@ class Game:
             Side Effects:
             Changes/gives a value to each face. """
         
-        for face in self.faces:
-            if face in ['2','3','4','5','6','7','8','9','10']:
-                self.value = int(face)
-            elif face in ['J','Q','K','A']:
-                self.value = 10
+        #for face in self.faces:
+        if face in ['2','3','4','5','6','7','9','10']:
+           self.value = int(face)
+        elif face == '8':
+            self.value = 50
+        elif face in ['J','Q','K','A']:
+            self.value = 10
         return self.value
 
     def player_help(self):
