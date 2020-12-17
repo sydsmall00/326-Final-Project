@@ -36,6 +36,8 @@ class Game:
             It will only consist of one card, the most recently 'popped' card 
             from either player or computer hands. Default to empty str.
         count (int): int defaulted to 0, that keeps track of how many cards are drawn.
+        play_options (list): empty list, lists play options of the computer turn.
+        
     """
 #add attributes to this function?
     def __init__(self):
@@ -51,6 +53,7 @@ class Game:
         self.computer_hand = []
         self.discarded = []
         self.count= 0 
+        self.play_options=[]
     
     def card_dealer(self):
         """ Assigns cards from deck to player and computer hands. Each receive 7 cards.
@@ -74,7 +77,10 @@ class Game:
             Jack, Queen, King, Ace = 10,
             and 8 = 50.
         
-             Returns: values associated with each card in the deck.
+            Args: 
+                face (str): face of the card in the hard
+            
+            Returns: values associated with each card in the deck.
         
             Side Effects:
             Changes/gives a value to each face. """
@@ -222,7 +228,6 @@ class Game:
         #Top card in the discard pile
         last= self.discarded
         #A list of cards that the computer can legally discard
-        self.play_options=[]
         #Sorts computer hand to find only cards that can legally be played.
         #Sorted cards are appended to play_options list
         for card in self.computer_hand:
@@ -336,7 +341,7 @@ class Game:
         # if the computer gets down to 0, the computer wins.
         elif len(self.computer_hand) == 0:
             print("The computer wins since it reached 0 points. :(")
-            print(f"You still had {player_points} points {len(self.p_hand)} cards left.")
+            print(f"You still had {player_points} points and {len(self.p_hand)} cards left.")
 
 def main():
     print("------------------------------*Game*------------------------------")
