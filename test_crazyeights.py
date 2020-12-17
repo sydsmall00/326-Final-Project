@@ -63,11 +63,15 @@ def test_card_dealer():
     g = Game()
     g.card_dealer()
     
-    # range is 7
+    # hands have 7 cards each
     assert len(g.p_hand) == 7
     assert len(g.computer_hand) == 7
-    
-     # check the total deck is 52
-    assert len(g.deck) == 52
+     # check the total deck is 38 (means cards have been added to the hands)
+    assert len(g.deck) == 38
+    # there should be a card in discard pile
     assert g.discarded is not None
-    
+    # the deck should be made of cards as tuples
+    for card in g.deck:
+        assert isinstance(card, tuple)
+    # last card in deck should be the top of the discard pile
+    assert g.deck[0] == g.discarded
