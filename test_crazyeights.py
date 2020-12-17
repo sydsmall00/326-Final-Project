@@ -59,3 +59,4 @@ def test_computer_options():
     if g.discarded == ('Diamond', '2'): #In the instance where the computer must draw
         assert g.c_draw_count()
 
+        
