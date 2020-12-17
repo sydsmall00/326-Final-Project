@@ -59,3 +59,15 @@ def test_computer_options():
     if g.discarded == ('Diamond', '2'): #In the instance where the computer must draw
         assert g.c_draw_count()
 
+def test_card_dealer():
+    g = Game()
+    g.card_dealer()
+    
+    # range is 7
+    assert len(g.p_hand) == 7
+    assert len(g.computer_hand) == 7
+    
+     # check the total is 52
+    assert len(g.deck) == 37
+    assert g.discarded is not None
+    
