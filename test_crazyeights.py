@@ -5,9 +5,9 @@ import pytest
 
 def test_init():
     g = Game()
-    assert isinstance(g.suits, list), "The suits attribute should be a list of suits."
-    assert len(g.suits) == 4, "There should be 4 suits."
-    for suit in g.suits:
+    assert isinstance(g.suit, list), "The suit attribute should be a list of suit."
+    assert len(g.suit) == 4, "There should be 4 suit."
+    for suit in g.suit:
         assert isinstance(suit, str), "Each suit should be a string."
     assert isinstance(g.faces, list), "The faces attribute should be a list of faces."
     assert len(g.faces) == 13, "There should be 13 faces."
@@ -19,7 +19,7 @@ def test_init():
         assert isinstance(card, tuple), "The deck should hold cards as tuples."
     assert len(g.deck) == 52, "The deck should hold 52 cards."
     assert len(g.p_hand) == 0, "Player hand should have no objects."
-    assert len(g.computer_hand) == 0, "Computer hand should have no objects."
+    assert len(g.c_hand) == 0, "Computer hand should have no objects."
     assert len(g.discarded) == 0, "The discard pile should have no objects."
     
 def test_card_value():
@@ -40,10 +40,10 @@ def test_card_value():
     
 def test_computer_options():
     g = Game()
-    g.suits = ['Diamond']
-    g.computer_hand == [('Club', '7'), ('Spade', '3'), ('Spade', '8'), ('Heart', '9')]
+    g.suit = ['Diamond']
+    g.c_hand == [('Club', '7'), ('Spade', '3'), ('Spade', '8'), ('Heart', '9')]
   
-    if g.discarded == ('Spade', '4'): #In the instance where the suits match
+    if g.discarded == ('Spade', '4'): #In the instance where the suit match
         assert g.discarded == ('Spade', '3') or ('Spade', '8')
       
     if g.discarded == ('Diamond', '9'): #In the instance where the numbers match
@@ -65,7 +65,7 @@ def test_card_dealer():
     
     # hands have 7 cards each
     assert len(g.p_hand) == 7
-    assert len(g.computer_hand) == 7
+    assert len(g.c_hand) == 7
      # check the total deck is 38 (means cards have been added to the hands)
     assert len(g.deck) == 38
     # there should be a card in discard pile
