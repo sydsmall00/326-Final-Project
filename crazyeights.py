@@ -106,7 +106,7 @@ class Game:
         """
         print(f"\n----You can play a {self.discarded[0]} or a {self.discarded[1]}.----\n")
         return self.player_turn()
-        
+    
     def player_options(self, selected_card):
         """ Determines whether the card selected to add to the discard pile is allowed to be chosen 
             as according to Crazy Eight's rules.
@@ -194,6 +194,7 @@ class Game:
                     continue
             if selected_card == 'help':
                 self.player_help()
+                break
             if selected_card == 'exit':
                 sys.exit('\nYou chose to stop the game. See you later!\n')
             # if player asks for new card
