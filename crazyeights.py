@@ -39,7 +39,7 @@ class Game:
         play_options (list): empty list, lists play options of the computer turn.
         
     """
-#add attributes to this function?
+    
     def __init__(self):
         """ Initializes all attributes pertinent to the game.   
             
@@ -155,7 +155,7 @@ class Game:
             return True
         else:
             print("You need to match discard pile card suit or rank. Please choose a different card.\n")
-            return False
+            self.player_turn()
             
     def player_turn(self):
         """ Allows the player to perform their turn: choose a new card from the discard pile, 
