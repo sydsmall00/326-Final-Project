@@ -65,7 +65,7 @@ def test_card_dealer():
     
     # hands have 7 cards each
     assert len(g.p_hand) == 7
-    assert len(g.computer_hand) == 7
+    assert len(g.c_hand) == 7
     
     # check the total deck is 38 (means cards have been added to the hands)
     assert len(g.deck) == 38
