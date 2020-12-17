@@ -67,8 +67,10 @@ def test_card_dealer():
     assert len(g.p_hand) == 7
     assert len(g.computer_hand) == 7
     
-     # check the total deck is 52
+    # check the total deck is 38 (means cards have been added to the hands)
     assert len(g.deck) == 38
+    
+    # There should be a card in the discard pile
     assert g.discarded is not None
     
     # the deck should be made of cards as tuples
