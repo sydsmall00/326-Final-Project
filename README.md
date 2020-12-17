@@ -107,3 +107,12 @@ they want to stop playing the game at any time.
           
           sys.exit(): allowed us to safely exit the program and return to the command line, where the player can 
           fully restart the crazy eights game.
+
+**https://towardsdatascience.com/python-the-boolean-confusion-f7fc5288f0ce**
+
+This website helped us made sure that the number of discarded cards in our test function of card_dealer was not 
+empty. 
+
+            Ex:
+
+            The "is not None" was used to make sure the number of discarded cards had value.
