@@ -68,6 +68,6 @@ def test_card_dealer():
     assert len(g.computer_hand) == 7
     
      # check the total deck is 52
-    assert len(g.deck) == 52
+    assert len(g.deck) == 38
     assert g.discarded is not None
     
