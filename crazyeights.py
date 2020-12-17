@@ -31,7 +31,7 @@ class Game:
             normal card deck. For example one possible combination would be 
             [(Heart, Q)].
         p_hand: (list): empty list (of where player's 7 cards will be stored).
-            computer_hand (list): empty list (of where computer's 7 cards will be stored).
+            c_hand (list): empty list (of where computer's 7 cards will be stored).
         discarded (list): Cards that the players will discard into a pile. 
             It will only consist of one card, the most recently 'popped' card 
             from either player or computer hands. Default to empty str.
@@ -44,30 +44,31 @@ class Game:
         """ Initializes all attributes pertinent to the game.   
             
         """
-        self.suits = ['Heart','Diamond','Spade','Club']
+        self.suit = ['Heart','Diamond','Spade','Club']
         self.faces = ['2','3','4','5','6','7','8','9','10','J','Q','K','A']
+        self.deck = [(suit,face) for suit in self.suit for face in self.faces]
         self.value = int()
-        self.suit_change = ''
-        self.deck = [(suit,face) for suit in self.suits for face in self.faces]
         self.p_hand = []
-        self.computer_hand = []
+        self.suit_change = ''
+        self.c_hand = []
         self.discarded = []
         self.count= 0 
-        self.play_options=[]
+        self.play_options= []
     
     def card_dealer(self):
         """ Assigns cards from deck to player and computer hands. Each receive 7 cards.
             Creates the discard pile.
             
-        Side Effects:
-            shuffles self.deck using random method.
-            modifies self.p_hand, self.computer_hand, self.discarded. 
+            Side Effects:
+                shuffles self.deck using random method.
+                modifies self.p_hand, self.c_hand, self.discarded. 
                   
-        """
+        """ 
+    
         random.shuffle(self.deck)
         for card in range(7): 
             self.p_hand.append(self.deck.pop(0))
-            self.computer_hand.append(self.deck.pop(0))
+            self.c_hand.append(self.deck.pop(0))
         discard_card = self.deck[0]
         self.discarded = discard_card
     
@@ -78,12 +79,14 @@ class Game:
             and 8 = 50.
         
             Args: 
-                face (str): face of the card in the hard
+                face (str): face of the card in the hand
             
-            Returns: values associated with each card in the deck.
+            Returns: 
+                self.value: value associated with each card in the deck.
         
             Side Effects:
-            Changes/gives a value to each face. """
+                Changes/gives a value to each face. 
+        """
         
         #for face in self.faces:
         if face in ['2','3','4','5','6','7','9','10']:
@@ -123,18 +126,23 @@ class Game:
             
         Side Effects:
             Changes the top card of the discard pile if a discard occurs.
+            Changes the suit of the discard pile is an 8 is played.
             Removes cards from player's hand.
             Adds cards to player's hand.
         """
         # If the player plays an '8', change the suit
         if self.p_hand[int(selected_card)-1][1] == '8':
+            # tell player what the suit currently is
             print(f"Suit is {self.discarded[0]}.\n")
+            # take card from hand and add to discard pile
             self.discarded = self.p_hand[int(selected_card)-1]
             self.p_hand.remove(self.p_hand[int(selected_card)-1])
+            # change the suit
             suit_input = input("Please enter a new suit: Heart, Diamond, Spade, Club.\n")
             suit_input = suit_input.capitalize()
             self.suit_change = suit_input
             print(f"New suit is: {self.suit_change}")
+            # discard pile is set equal to the suit change, player must put down that suit
             self.discarded = (self.suit_change, '')
             return True
         # if the suit in the selected card equals the suit or face equals the face
@@ -147,9 +155,6 @@ class Game:
         else:
             print("You need to match discard pile card suit or rank. Please choose a different card.\n")
             return False
-        # If the user does not input a number, raise error
-        # if selected_card.isdigit() is False:
-           # raise AssertionError("You have to input a digit of the card you want to discard.")
             
     def player_turn(self):
         """ Allows the player to perform their turn: choose a new card from the discard pile, 
@@ -170,8 +175,7 @@ class Game:
         """
         selected_card = str()
         print("It's your turn to play!\n")
-        # player needs to enter whether they need a new card or which card they want.
-        # to discard as long as there are cards in the deck
+        # player needs to enter whether they need a new card or which card they want to discard
         while len(self.deck) > 0:
             print(f"Current discard pile is: \n {self.discarded}\n")
             print("Your current hand is:\n")
@@ -192,7 +196,7 @@ class Game:
                 sys.exit('\nYou chose to stop the game. See you later!\n')
             # if player asks for new card
             if selected_card == 'new':
-                # take card from deck and add to hand
+                # take last card from deck and add to hand
                 card = self.deck[-1]
                 self.p_hand.append(card)
                 self.deck.remove(card)
@@ -203,11 +207,11 @@ class Game:
         # if the player has no cards left
         if len(self.p_hand) == 0:
             print("You have no more cards!")
-            return self.calculator
+            return self.winner
         # if there are no more cards in the deck
         elif len(self.deck) == 0:
             print("The deck has no more cards!")
-            return self.calculator
+            return self.winner
             
     def computer_options(self):
         """ Selects card for the computer to play according to Crazy Eight's rules.
@@ -225,47 +229,42 @@ class Game:
             Adds cards to computer's hand.
             
             """
-        #Top card in the discard pile
+        # Top card in the discard pile
         last= self.discarded
-        #A list of cards that the computer can legally discard
-        #Sorts computer hand to find only cards that can legally be played.
-        #Sorted cards are appended to play_options list
-        for card in self.computer_hand:
-            #If human player discards an 8
+        # Sorts computer hand to find only cards that can legally be played.
+        # Sorted cards are appended to play_options list
+        for card in self.c_hand:
+            # If human player discards an 8
             if last[1] == '8':
-                #If the computer has another 8 to play
+                # If the computer has another 8 to play
                 if card[1] == last[1]:
                     self.play_options.append(card)
-                    self.computer_hand.remove(card)
-                #If the computer has cards of the new suit
+                    self.c_hand.remove(card)
+                # If the computer has cards of the new suit
                 if card[0] == self.suit_change:
                     self.play_options.append(card)
-                    self.computer_hand.remove(card)
+                    self.c_hand.remove(card)
             else:
-                #If the computer has cards of the same suit
+                # If the computer has cards of the same suit
                 if card[0] == last[0]:
                     self.play_options.append(card)
-                    self.computer_hand.remove(card)
-                #If the computer has cards of the same number
+                    self.c_hand.remove(card)
+                # If the computer has cards of the same number
                 if card[1] == last[1]:
                     self.play_options.append(card)
-                    self.computer_hand.remove(card)
-
+                    self.c_hand.remove(card)
+                    
         if len(self.play_options) > 0:
             discarded_card = random.choice(self.play_options)
             self.play_options.remove(discarded_card)
-
-            #Places card in discard pile
+            # Places card in discard pile
             self.discarded = discarded_card
-
-            #If computer discards an 8
+            # If computer discards an 8
             if discarded_card[1] == '8':
-                #New suit picked
-                new_suit=random.choice(self.suits)
+                # New suit is randomly picked
+                new_suit=random.choice(self.suit)
                 print(f"New suit is: {new_suit}")
-            
-            
-            self.computer_hand.extend(self.play_options)    
+            self.c_hand.extend(self.play_options)    
             del self.play_options[:]
         else:
             self.c_draw_count()
@@ -279,7 +278,7 @@ class Game:
                 Updates the count.
         """
         while len(self.play_options) == 0 and len(self.deck) > 0:
-            self.computer_hand.append(self.deck.pop(0))
+            self.c_hand.append(self.deck.pop(0))
             self.count +=1
             self.computer_options()
             break
@@ -292,69 +291,70 @@ class Game:
             Prints:
                 (str): "The computer has no more cards!" 
             Removes card from deck and adds to the computer's hand.
-            Ends the game if no more cards -- calling the calculator.
+            Ends the game if no more cards -- calling the winner.
             Calls the player's turn.
             
         """
-        print("It's the computer's turn!\n")
-        # count = 0
+        print("It's the computer's turn to play !")
         while len(self.deck) > 0:
-            print(f"Discard pile: {self.discarded}\n")
             self.computer_options()
             break
         self.count = 0
         print(f"The computer drew {self.count} card(s).\n")
         if len(self.deck) == 0:
             print("The deck is out of cards.\n")
-            return self.calculator
-        elif len(self.computer_hand) == 0:
+            return self.winner
+        elif len(self.c_hand) == 0:
             print("The computer has no more cards!\n")
-            return self.calculator
+            return self.winner
     
-    def calculator(self):
+    def winner(self):
         """ Calculates the points as according to the Crazy Eight's rules.
-            Adds the values of the cards in player and computer hands,
-            whoever's is lowest (0) wins.
+            Adds the values of the cards in player and computer hands.
+            The player who reaches 0 cards first wins,
+            then their points are added.
             
         Side Effects:
             Prints:
-                player_points (int): # of points the player has @ end of game.
-                computer_points (int): # of points the computer scored @ end of game.
+                p_points (int): # of points the player has @ end of game.
+                c_points (int): # of points the computer scored @ end of game.
             Changes point values.
             
         """
         #Assign player and computer points to empty integers.
-        player_points = int()
-        computer_points = int()
+        p_points = int()
+        c_points = int()
     
         #Update player points and computer points according to each cards value.
         for face in self.p_hand:
-            player_points += self.card_value(face[1])
-        for face in self.computer_hand:
-            computer_points += self.card_value(face[1])
+            p_points += self.card_value(face[1])
+        for face in self.c_hand:
+            c_points += self.card_value(face[1])
     
         #if the player gets down to 0 cards, the player wins.
         if len(self.p_hand) == 0: 
             print("You win since you reached 0 points! :)")
-            print(f"The computer still had {computer_points} points and {len(self.computer_hand)} cards left.")
+            print(f"The computer still had {c_points} points and {len(self.c_hand)} cards left.")
             
         # if the computer gets down to 0, the computer wins.
-        elif len(self.computer_hand) == 0:
+        elif len(self.c_hand) == 0:
             print("The computer wins since it reached 0 points. :(")
-            print(f"You still had {player_points} points and {len(self.p_hand)} cards left.")
+            print(f"You still had {p_points} points and {len(self.p_hand)} cards left.")
 
 def main():
+    
     print("------------------------------*Game*------------------------------")
     game = Game()
     player_name = input("Please enter your player name: \n")
     print("------------------------------------------------------------")
     print(f"\nWelcome, {player_name}!\n")
+    
     game.card_dealer()
-    while len(game.p_hand) and len(game.computer_hand) > 0:
+    while len(game.p_hand) and len(game.c_hand) > 0:
         game.player_turn()
         game.computer_turn()
-        if len(game.deck) or len(game.p_hand) or len(game.computer_hand) == 0:
-            game.calculator()
+        if len(game.deck) or len(game.p_hand) or len(game.c_hand) == 0:
+            game.winner()
             
 if __name__ == "__main__":
     main()
