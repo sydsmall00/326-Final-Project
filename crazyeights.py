@@ -61,7 +61,8 @@ class Game:
             
             Side Effects:
                 shuffles self.deck using random method.
-                modifies self.p_hand, self.c_hand, self.discarded. 
+                removes cards from the deck.
+                adds to self.p_hand, self.c_hand, self.discarded. 
                   
         """ 
     
@@ -113,7 +114,7 @@ class Game:
             
             Options:
                     - If the player plays an 8, they are able to change the suit
-                        - If the player changes the suit, put down a card that matches
+                    - If the player changes the suit, put down a card that matches
                     - A "normal" turn: The player plays a card in their hand that matches the suit or face.
             
         Args:
@@ -167,6 +168,7 @@ class Game:
                         Please choose a different card.
                 (str): "You have no more cards!" 
                 (str): "The deck has no more cards!"
+                (str): "You chose to stop the game. See you later!"
             May call the player help function.
             Removes card from deck and adds to player's hand.
             Ends the game if no more cards.
@@ -217,11 +219,6 @@ class Game:
         """ Selects card for the computer to play according to Crazy Eight's rules.
             Only a card of the same face or suit can be discarded. If an 8 is played,
             a new suit can be chosen by the computer for future rounds.
-            
-            Parameters:
-                last(tuple): Top card of the discard pile
-                play_options(list): Options for the computer to choose from
-                discarded_card(tuple): Card that is discarded by the computer
             
             Side Effects:
             Changes the top card of the discard pile if a discard occurs.
