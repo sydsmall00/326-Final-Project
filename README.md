@@ -121,7 +121,6 @@ empty.
 This webste showed how us how to delete all items in a list at once, which was necessary to reset a list in our program.
 
             Ex:
-            
-            del my_list[:]:
-                Clears the list of computer's playable options in computer_options(), so 
-                that it can be reset for the next turn.
+
+            del my_list[:]: Clears the list of computer's playable options in computer_options(), so that it can 
+            be reset for the next turn.
