@@ -176,9 +176,9 @@ class Game:
             
         """
         selected_card = str()
-        print("It's your turn to play!\n")
         # player needs to enter whether they need a new card or which card they want to discard
         while len(self.deck) > 0:
+            print("It's your turn to play!\n")
             print(f"Current discard pile is: \n {self.discarded}\n")
             print("Your current hand is:\n")
             for index, card in enumerate(self.p_hand):
@@ -215,7 +215,7 @@ class Game:
         elif len(self.deck) == 0:
             print("The deck has no more cards!")
             return self.winner
-            
+        
     def computer_options(self):
         """ Selects card for the computer to play according to Crazy Eight's rules.
             Only a card of the same face or suit can be discarded. If an 8 is played,
@@ -293,8 +293,8 @@ class Game:
             Calls the player's turn.
             
         """
-        print("It's the computer's turn to play !")
         while len(self.deck) > 0:
+            print("It's the computer's turn to play !")
             self.computer_options()
             break
         self.count = 0
@@ -302,7 +302,7 @@ class Game:
         if len(self.deck) == 0:
             print("The deck is out of cards.\n")
             return self.winner
-        elif len(self.c_hand) == 0:
+        if len(self.c_hand) == 0:
             print("The computer has no more cards!\n")
             return self.winner
     
@@ -339,6 +339,9 @@ class Game:
             print("The computer wins since it reached 0 points. :(")
             print(f"You still had {p_points} points and {len(self.p_hand)} cards left.")
 
+        # if the deck runs out of cards
+        elif len(self.deck) == 0:
+            print (f"Game over! There was no winner :(")
 def main():
     
     print("------------------------------*Game*------------------------------")
