@@ -255,13 +255,15 @@ class Game:
         if len(self.play_options) > 0:
             discarded_card = random.choice(self.play_options)
             self.play_options.remove(discarded_card)
-            # Places card in discard pile
-            self.discarded = discarded_card
             # If computer discards an 8
             if discarded_card[1] == '8':
                 # New suit is randomly picked
                 new_suit=random.choice(self.suit)
-                print(f"New suit is: {new_suit}")
+                print(f"The computer played a CRAZY EIGHT!! \nNew suit is: {new_suit}")
+                self.discarded = (new_suit, str())
+            else:
+                # Places card in discard pile
+                self.discarded = discarded_card
             self.c_hand.extend(self.play_options)    
             del self.play_options[:]
         else:
