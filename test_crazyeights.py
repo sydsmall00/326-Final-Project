@@ -40,24 +40,39 @@ def test_card_value():
     
 def test_computer_options():
     g = Game()
+    ################################################################################
     g.suit = ['Diamond']
-    g.c_hand == [('Club', '7'), ('Spade', '3'), ('Spade', '8'), ('Heart', '9')]
-  
-    if g.discarded == ('Spade', '4'): #In the instance where the suit match
-        assert g.discarded == ('Spade', '3') or ('Spade', '8')
-      
-    if g.discarded == ('Diamond', '9'): #In the instance where the numbers match
-        assert g.discarded == ('Heart', '9')
-      
-    if g.discarded == ('Club', '8'): #In the instance where an 8 is played
-        assert g.discarded == ('Spade', '8')
-        assert print("New suit is: Diamond")
-      
-    if g.suit_change == "Club": #In the instance where the suit is changed by the player
-        assert g.discarded == ('Club', '7')
-      
-    if g.discarded == ('Diamond', '2'): #In the instance where the computer must draw
-        assert g.c_draw_count()
+    g.suit_change = 'Spade'
+    g.c_hand = [('Spade', '2'), ('Heart', '9'), 
+                 ('Club', '8'), ('Heart', '4')]
+    g.deck = [('Spade', 'Q'), ('Diamond', '9')]
+    ################################################################################
+    #If the numbers match
+    g.discarded = ('Diamond', '4')
+    g.computer_options()
+    assert g.discarded == ('Heart', '4')
+    ################################################################################
+    #If Suits match 
+    g.discarded = ('Spade', '4')
+    g.computer_options()
+    assert g.discarded == ('Spade', '2')
+    ################################################################################
+    #If computer discards 8. It should automatically 
+    #change the suit, and the number will remain 8
+    g.discarded = ('Club', '4')
+    g.computer_options()
+    assert g.discarded == ('Diamond', '8')
+    ################################################################################
+    # If Player changes suit to Spade
+    g.discarded = ('Heart', '8')
+    g.computer_options()
+    #Must be drawn from deck, since spade was discarded in previous assertion
+    assert g.discarded == ('Spade', 'Q')
+    ################################################################################
+    # If the computer must draw from deck
+    g.discarded = ('Diamond', 'K')
+    g.computer_options()
+    assert g.discarded == ('Diamond', '9') 
 
 def test_card_dealer():
     g = Game()
