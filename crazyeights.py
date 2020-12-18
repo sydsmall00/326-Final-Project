@@ -359,10 +359,10 @@ def main():
     print(f"\nWelcome, {player_name}!\n")
     
     game.card_dealer()
-    while len(game.p_hand) and len(game.c_hand) > 0:
+    while len(game.p_hand) and len(game.c_hand) > 0 and len(game.deck) > 0:
         game.player_turn()
         game.computer_turn()
-        if len(game.deck)==0 or len(game.p_hand)==0 or len(game.c_hand) == 0:
+        if len(game.deck) == 0 or len(game.p_hand)==0 or len(game.c_hand) == 0:
             game.winner()
             break
             
