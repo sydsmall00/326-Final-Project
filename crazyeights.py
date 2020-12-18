@@ -259,8 +259,8 @@ class Game:
             if discarded_card[1] == '8':
                 # New suit is randomly picked
                 new_suit=random.choice(self.suit)
-                print(f"The computer played a CRAZY EIGHT!! \nNew suit is: {new_suit}")
-                self.discarded = (new_suit, str())
+                print(f"The computer played {discarded_card}, a CRAZY EIGHT!! \nNew suit is: {new_suit}")
+                self.discarded = (new_suit, "8")
             else:
                 # Places card in discard pile
                 self.discarded = discarded_card
@@ -277,11 +277,14 @@ class Game:
                 Adds card to deck.
                 Updates the count.
         """
-        while len(self.play_options) == 0 and len(self.deck) > 0:
-            self.c_hand.append(self.deck.pop(0))
-            self.count +=1
-            self.computer_options()
-            break
+        while len(self.play_options) == 0:
+            if len(self.deck) == 0:
+                self.winner()
+            else:
+                self.c_hand.append(self.deck.pop(0))
+                self.count +=1
+                self.computer_options()
+                break
             
     def computer_turn(self):
         """ Allows the computer to perform its turn by drawing the number of cards necessary,
@@ -295,18 +298,21 @@ class Game:
             Calls the player's turn.
             
         """
-        while len(self.deck) > 0:
-            print("It's the computer's turn to play !")
-            self.computer_options()
-            break
-        self.count = 0
-        print(f"The computer drew {self.count} card(s).\n")
         if len(self.deck) == 0:
-            print("The deck is out of cards.\n")
             return self.winner
-        if len(self.c_hand) == 0:
-            print("The computer has no more cards!\n")
-            return self.winner
+        else:
+            while len(self.deck) > 0:
+                print("It's the computer's turn to play !")
+                self.computer_options()
+                break
+            print(f"The computer drew {self.count} card(s).\n")
+            self.count = 0
+            if len(self.deck) == 0:
+                print("The deck is out of cards.\n")
+                return self.winner
+            if len(self.c_hand) == 0:
+                print("The computer has no more cards!\n")
+                return self.winner
     
     def winner(self):
         """ Calculates the points as according to the Crazy Eight's rules.
@@ -356,8 +362,9 @@ def main():
     while len(game.p_hand) and len(game.c_hand) > 0:
         game.player_turn()
         game.computer_turn()
-        if len(game.deck) or len(game.p_hand) or len(game.c_hand) == 0:
+        if len(game.deck)==0 or len(game.p_hand)==0 or len(game.c_hand) == 0:
             game.winner()
+            break
             
 if __name__ == "__main__":
     main()
