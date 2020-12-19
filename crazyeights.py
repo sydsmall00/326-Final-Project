@@ -217,15 +217,16 @@ class Game:
             return self.winner
         
     def computer_options(self):
-        """ Selects card for the computer to play according to Crazy Eight's rules.
+        """ Selects card for the computer to play according to Crazy Eights' rules.
             Only a card of the same face or suit can be discarded. If an 8 is played,
             a new suit can be chosen by the computer for future rounds.
             
             Side Effects:
-            Changes the top card of the discard pile if a discard occurs.
-            Removes cards from computer's hand.
-            Adds cards to computer's hand.
-            
+                Changes the top card of the discard pile if a discard occurs.
+                Removes cards from computer's hand.
+                Adds cards to computer's hand.
+            Return:
+                c_draw_count(): If card needs to be drawn
             """
         # Top card in the discard pile
         last= self.discarded
@@ -274,8 +275,10 @@ class Game:
         
             Side Effects:
                 Removes card from deck.
-                Adds card to deck.
                 Updates the count.
+            Return:
+                winner(): If the deck is empty
+                computer_options(): If card is drawn
         """
         while len(self.play_options) == 0:
             if len(self.deck) == 0:
@@ -293,9 +296,12 @@ class Game:
         Side Effects:
             Prints:
                 (str): "The computer has no more cards!" 
-            Removes card from deck and adds to the computer's hand.
-            Ends the game if no more cards -- calling the winner.
-            Calls the player's turn.
+            Removes card from deck
+            Adds to the computer's hand.
+            Ends the game if no more cards -- calling winner().
+        Return: 
+            computer_options(): If there are still cards in the deck
+            winner(): If the deck is empty or if c_hand is empty
             
         """
         if len(self.deck) == 0:
@@ -341,7 +347,7 @@ class Game:
         if len(self.p_hand) == 0: 
             print("You win since you reached 0 points! :)")
             print(f"The computer still had {c_points} points and {len(self.c_hand)} cards left.")
-            
+           
         # if the computer gets down to 0, the computer wins.
         elif len(self.c_hand) == 0:
             print("The computer wins since it reached 0 points. :(")
@@ -352,12 +358,11 @@ class Game:
             print (f"Game over! There was no winner :(")
 def main():
     
-    print("------------------------------*Game*------------------------------")
+    print("----------------------------*Game*----------------------------")
     game = Game()
     player_name = input("Please enter your player name: \n")
-    print("------------------------------------------------------------")
-    print(f"\nWelcome, {player_name}!\n")
-    
+    print("--------------------------------------------------------------")
+    print(f"\nWelcome, {player_name}!\n")   
     game.card_dealer()
     while len(game.p_hand) and len(game.c_hand) > 0 and len(game.deck) > 0:
         game.player_turn()
@@ -368,6 +373,4 @@ def main():
             
 if __name__ == "__main__":
     main()
-  
-    
     # python3 crazyeights.py
