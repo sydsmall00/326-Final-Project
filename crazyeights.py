@@ -283,6 +283,7 @@ class Game:
         while len(self.play_options) == 0:
             if len(self.deck) == 0:
                 self.winner()
+                break
             else:
                 self.c_hand.append(self.deck.pop(0))
                 self.count +=1
@@ -353,9 +354,6 @@ class Game:
             print("The computer wins since it reached 0 points. :(")
             print(f"You still had {p_points} points and {len(self.p_hand)} cards left.")
 
-        # if the deck runs out of cards
-        elif len(self.deck) == 0:
-            print (f"Game over! There was no winner :(")
 def main():
     
     print("----------------------------*Game*----------------------------")
@@ -367,9 +365,11 @@ def main():
     while len(game.p_hand) and len(game.c_hand) > 0 and len(game.deck) > 0:
         game.player_turn()
         game.computer_turn()
-        if len(game.deck) == 0 or len(game.p_hand)==0 or len(game.c_hand) == 0:
+        if len(game.p_hand)== 0 or len(game.c_hand) == 0:
             game.winner()
             break
+        elif len(game.deck) == 0:
+            print("Game over! There was no winner :(")
             
 if __name__ == "__main__":
     main()
