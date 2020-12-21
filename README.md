@@ -12,6 +12,11 @@ Use "python3 crazyeights.py" for Mac
 "python crazyeights.py" for Windows.
 
 ### **Crazy Eights Instructions:**
+
+Here is a link to the bicycle cards website to show the official instructions: https://bicyclecards.com/how-to-play/crazy-eights/
+
+#### How to play:
+
 The game will ask you to input your **player name**.
 
 Then, it will lay out your hand of cards, as well as the card at the top of the discard pile.
