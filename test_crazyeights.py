@@ -22,21 +22,21 @@ def test_init():
     assert len(g.c_hand) == 0, "Computer hand should have no objects."
     assert len(g.discarded) == 0, "The discard pile should have no objects."
     
-def test_card_value():
+def test_face_value():
     g = Game()
-    assert g.card_value('8') == 50
-    assert g.card_value('K') == 10
-    assert g.card_value('J') == 10
-    assert g.card_value('Q') == 10
-    assert g.card_value('A') == 10
-    assert g.card_value('2') == 2
-    assert g.card_value('3') == 3
-    assert g.card_value('4') == 4
-    assert g.card_value('5') == 5
-    assert g.card_value('6') == 6
-    assert g.card_value('7') == 7
-    assert g.card_value('9') == 9
-    assert g.card_value('10') == 10
+    assert g.face_value('8') == 50
+    assert g.face_value('K') == 10
+    assert g.face_value('J') == 10
+    assert g.face_value('Q') == 10
+    assert g.face_value('A') == 10
+    assert g.face_value('2') == 2
+    assert g.face_value('3') == 3
+    assert g.face_value('4') == 4
+    assert g.face_value('5') == 5
+    assert g.face_value('6') == 6
+    assert g.face_value('7') == 7
+    assert g.face_value('9') == 9
+    assert g.face_value('10') == 10
     
 def test_computer_options():
     g = Game()
@@ -58,10 +58,10 @@ def test_computer_options():
     assert g.discarded == ('Spade', '2')
     ################################################################################
     #If computer discards 8. It should automatically 
-    #change the suit, and the number will remain 8
+    #change the suit
     g.discarded = ('Club', '4')
     g.computer_options()
-    assert g.discarded == ('Diamond', '8')
+    assert g.discarded == ('Diamond', '')
     ################################################################################
     # If Player changes suit to Spade
     g.discarded = ('Heart', '8')
